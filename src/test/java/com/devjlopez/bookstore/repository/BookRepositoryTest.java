@@ -7,6 +7,9 @@ package com.devjlopez.bookstore.repository;
 
 import com.devjlopez.bookstore.model.Book;
 import com.devjlopez.bookstore.model.Language;
+import com.devjlopez.bookstore.util.IsbnGenerator;
+import com.devjlopez.bookstore.util.NumberGenerator;
+import com.devjlopez.bookstore.util.TextUtil;
 import java.util.Date;
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -14,8 +17,8 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,7 +62,7 @@ public class BookRepositoryTest {
                 
         Book book = new Book(
                 "isbn", 
-                "x title", 
+                "x  title", 
                 12F, 
                 123, 
                 Language.ENGLISH, 
@@ -77,6 +80,7 @@ public class BookRepositoryTest {
         Book bookFound = bookRepository.find(bookId);
         
         assertEquals("x title", bookFound.getTitle());
+        assertTrue(bookFound.getIsbn().startsWith("13"));
         
         assertEquals(Long.valueOf(1), bookRepository.countAll());
         assertEquals(1, bookRepository.findAll().size());
@@ -94,6 +98,9 @@ public class BookRepositoryTest {
                .addClass(BookRepository.class)
                .addClass(Book.class)
                .addClass(Language.class)
+               .addClass(TextUtil.class)
+               .addClass(NumberGenerator.class)               
+               .addClass(IsbnGenerator.class)               
                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml");
    }
