@@ -3,6 +3,10 @@ package com.devjlopez.bookstore.model;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ *
+ * @author jlopez
+ */
 @Entity
 public class Book {
 
@@ -31,6 +35,20 @@ public class Book {
     private String imageUrl;
 
     private Language language;
+    
+    public Book(){        
+    }
+    
+    public Book(String isbn, String title, Float unitCost, Integer nbOfPages, Language language, Date publicationDate, String imageUrl, String description) {
+        this.isbn = isbn;
+        this.title = title;
+        this.unitCost = unitCost;
+        this.nbOfPages = nbOfPages;
+        this.language = language;
+        this.publicationDate = publicationDate;
+        this.imageUrl = imageUrl;
+        this.description = description;
+    }
 
     public Long getId() {
         return id;
