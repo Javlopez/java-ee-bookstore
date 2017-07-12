@@ -22,8 +22,8 @@ public class Book {
     @Size(min = 1, max = 200)
     private String title;
 
-    @Column(length = 1000)
-    @Size(min = 1, max = 1000)
+    @Column(length = 10000)
+    @Size(min = 1, max = 10000)
     private String description;
 
     @Column(name = "unit_cost")
